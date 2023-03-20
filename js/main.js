@@ -18,6 +18,7 @@ searchInputEl.addEventListener('blur', function(){
 
 //스크롤에 따른 배지 보이기 & 숨기기
 const badgeEl = document.querySelector('header .badges');
+const toTopEl = document.querySelector('#to-top');
 
 window.addEventListener('scroll', _.throttle(function() {
     // console.log(window.scrollY);
@@ -28,15 +29,30 @@ window.addEventListener('scroll', _.throttle(function() {
             opacity: 0,
             display: 'none'
         });
+        //버튼 보이기
+        gsap.to('#to-top', .2, {
+            x: 0
+        });
     }else{
         //배지 보이기
         gsap.to(badgeEl, .6, {
             opacity: 1,
             display: 'block'
         });
+        //버튼 숨기기
+        gsap.to(toTopEl, .2, {
+            x: 100
+        });
     }
 },300));
 // _.throttle(함수, 시간)
+
+toTopEl.addEventListener('click', function() {
+   gsap.to(window, .7, {
+       scrollTo: 0
+   });
+});
+
 
 
 // 이미지 gsap 애니메이션
@@ -136,3 +152,6 @@ spyEls.forEach(function(spyEl) {
        .setClassToggle(spyEl, 'show')
        .addTo(new ScrollMagic.Controller());
 });
+
+const thisYear = document.querySelector('.this-year');
+thisYear.textContent = new Date().getFullYear(); //2023
